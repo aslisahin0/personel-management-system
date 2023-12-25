@@ -1,0 +1,485 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="testdbModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="DEPARTMENT">
+          <Key>
+            <PropertyRef Name="dept_id" />
+          </Key>
+          <Property Name="dept_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="dept_name" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="EMPLOYEES">
+          <Key>
+            <PropertyRef Name="employee_id" />
+          </Key>
+          <Property Name="employee_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="age" Type="int" Nullable="false" />
+          <Property Name="first_name" Type="nvarchar" MaxLength="50" />
+          <Property Name="last_name" Type="nvarchar" MaxLength="50" />
+          <Property Name="gender" Type="nvarchar" MaxLength="50" />
+          <Property Name="team_id" Type="int" Nullable="false" />
+          <Property Name="salary" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="MANAGERS">
+          <Key>
+            <PropertyRef Name="mngr_id" />
+          </Key>
+          <Property Name="mngr_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="first_name" Type="nvarchar" MaxLength="50" />
+          <Property Name="last_name" Type="nvarchar" MaxLength="50" />
+          <Property Name="gender" Type="nvarchar" MaxLength="50" />
+          <Property Name="dept_id" Type="int" Nullable="false" />
+          <Property Name="age" Type="int" Nullable="false" />
+          <Property Name="salary" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="principal_id" Type="int" Nullable="false" />
+          <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="version" Type="int" />
+          <Property Name="definition" Type="varbinary(max)" />
+        </EntityType>
+        <EntityType Name="TEAMS">
+          <Key>
+            <PropertyRef Name="team_id" />
+          </Key>
+          <Property Name="team_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="team_name" Type="nvarchar" MaxLength="50" />
+          <Property Name="dept_id" Type="int" Nullable="false" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'testdb.dbo.viewDepartment' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="viewDepartment">
+          <Key>
+            <PropertyRef Name="dept_id" />
+          </Key>
+          <Property Name="dept_name" Type="nvarchar" MaxLength="50" />
+          <Property Name="dept_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'testdb.dbo.ViewEmployees' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="ViewEmployees">
+          <Key>
+            <PropertyRef Name="age" />
+            <PropertyRef Name="employee_id" />
+            <PropertyRef Name="team_id" />
+            <PropertyRef Name="salary" />
+            <PropertyRef Name="dept_id" />
+          </Key>
+          <Property Name="age" Type="int" Nullable="false" />
+          <Property Name="employee_id" Type="int" Nullable="false" />
+          <Property Name="first_name" Type="nvarchar" MaxLength="50" />
+          <Property Name="last_name" Type="nvarchar" MaxLength="50" />
+          <Property Name="gender" Type="nvarchar" MaxLength="50" />
+          <Property Name="team_id" Type="int" Nullable="false" />
+          <Property Name="salary" Type="int" Nullable="false" />
+          <Property Name="team_name" Type="nvarchar" MaxLength="50" />
+          <Property Name="dept_id" Type="int" Nullable="false" />
+          <Property Name="dept_name" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'testdb.dbo.ViewManagers' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="ViewManagers">
+          <Key>
+            <PropertyRef Name="age" />
+            <PropertyRef Name="salary" />
+            <PropertyRef Name="mngr_id" />
+          </Key>
+          <Property Name="first_name" Type="nvarchar" MaxLength="50" />
+          <Property Name="last_name" Type="nvarchar" MaxLength="50" />
+          <Property Name="gender" Type="nvarchar" MaxLength="50" />
+          <Property Name="age" Type="int" Nullable="false" />
+          <Property Name="salary" Type="int" Nullable="false" />
+          <Property Name="mngr_id" Type="int" Nullable="false" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'testdb.dbo.ViewTeams' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="ViewTeams">
+          <Key>
+            <PropertyRef Name="team_id" />
+            <PropertyRef Name="dept_id" />
+          </Key>
+          <Property Name="team_id" Type="int" Nullable="false" />
+          <Property Name="team_name" Type="nvarchar" MaxLength="50" />
+          <Property Name="dept_name" Type="nvarchar" MaxLength="50" />
+          <Property Name="dept_id" Type="int" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_EMPLOYEES_TEAMS">
+          <End Role="TEAMS" Type="Self.TEAMS" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="EMPLOYEES" Type="Self.EMPLOYEES" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TEAMS">
+              <PropertyRef Name="team_id" />
+            </Principal>
+            <Dependent Role="EMPLOYEES">
+              <PropertyRef Name="team_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TEAMS_DEPARTMENT">
+          <End Role="DEPARTMENT" Type="Self.DEPARTMENT" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="TEAMS" Type="Self.TEAMS" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DEPARTMENT">
+              <PropertyRef Name="dept_id" />
+            </Principal>
+            <Dependent Role="TEAMS">
+              <PropertyRef Name="dept_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        
+        
+        
+        
+        
+        
+        
+        
+        <EntityContainer Name="testdbModelStoreContainer">
+          <EntitySet Name="DEPARTMENT" EntityType="Self.DEPARTMENT" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="EMPLOYEES" EntityType="Self.EMPLOYEES" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="MANAGERS" EntityType="Self.MANAGERS" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TEAMS" EntityType="Self.TEAMS" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="viewDepartment" EntityType="Self.viewDepartment" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [viewDepartment].[dept_name] AS [dept_name], 
+    [viewDepartment].[dept_id] AS [dept_id]
+    FROM [dbo].[viewDepartment] AS [viewDepartment]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="ViewEmployees" EntityType="Self.ViewEmployees" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [ViewEmployees].[age] AS [age], 
+    [ViewEmployees].[employee_id] AS [employee_id], 
+    [ViewEmployees].[first_name] AS [first_name], 
+    [ViewEmployees].[last_name] AS [last_name], 
+    [ViewEmployees].[gender] AS [gender], 
+    [ViewEmployees].[team_id] AS [team_id], 
+    [ViewEmployees].[salary] AS [salary], 
+    [ViewEmployees].[team_name] AS [team_name], 
+    [ViewEmployees].[dept_id] AS [dept_id], 
+    [ViewEmployees].[dept_name] AS [dept_name]
+    FROM [dbo].[ViewEmployees] AS [ViewEmployees]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="ViewManagers" EntityType="Self.ViewManagers" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [ViewManagers].[first_name] AS [first_name], 
+    [ViewManagers].[last_name] AS [last_name], 
+    [ViewManagers].[gender] AS [gender], 
+    [ViewManagers].[age] AS [age], 
+    [ViewManagers].[salary] AS [salary], 
+    [ViewManagers].[mngr_id] AS [mngr_id]
+    FROM [dbo].[ViewManagers] AS [ViewManagers]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="ViewTeams" EntityType="Self.ViewTeams" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [ViewTeams].[team_id] AS [team_id], 
+    [ViewTeams].[team_name] AS [team_name], 
+    [ViewTeams].[dept_name] AS [dept_name], 
+    [ViewTeams].[dept_id] AS [dept_id]
+    FROM [dbo].[ViewTeams] AS [ViewTeams]</DefiningQuery>
+          </EntitySet>
+          <AssociationSet Name="FK_EMPLOYEES_TEAMS" Association="Self.FK_EMPLOYEES_TEAMS">
+            <End Role="TEAMS" EntitySet="TEAMS" />
+            <End Role="EMPLOYEES" EntitySet="EMPLOYEES" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TEAMS_DEPARTMENT" Association="Self.FK_TEAMS_DEPARTMENT">
+            <End Role="DEPARTMENT" EntitySet="DEPARTMENT" />
+            <End Role="TEAMS" EntitySet="TEAMS" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="testdbModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityContainer Name="testdbEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="DEPARTMENT" EntityType="testdbModel.DEPARTMENT" />
+          <EntitySet Name="EMPLOYEES" EntityType="testdbModel.EMPLOYEES" />
+          <EntitySet Name="MANAGERS" EntityType="testdbModel.MANAGERS" />
+          <EntitySet Name="sysdiagrams" EntityType="testdbModel.sysdiagrams" />
+          <EntitySet Name="TEAMS" EntityType="testdbModel.TEAMS" />
+          <EntitySet Name="viewDepartment" EntityType="testdbModel.viewDepartment" />
+          <EntitySet Name="ViewEmployees" EntityType="testdbModel.ViewEmployees" />
+          <EntitySet Name="ViewManagers" EntityType="testdbModel.ViewManagers" />
+          <EntitySet Name="ViewTeams" EntityType="testdbModel.ViewTeams" />
+          <AssociationSet Name="FK_TEAMS_DEPARTMENT" Association="testdbModel.FK_TEAMS_DEPARTMENT">
+            <End Role="DEPARTMENT" EntitySet="DEPARTMENT" />
+            <End Role="TEAMS" EntitySet="TEAMS" />
+          </AssociationSet>
+          <AssociationSet Name="FK_EMPLOYEES_TEAMS" Association="testdbModel.FK_EMPLOYEES_TEAMS">
+            <End Role="TEAMS" EntitySet="TEAMS" />
+            <End Role="EMPLOYEES" EntitySet="EMPLOYEES" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="DEPARTMENT">
+          <Key>
+            <PropertyRef Name="dept_id" />
+          </Key>
+          <Property Name="dept_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="dept_name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="TEAMS" Relationship="testdbModel.FK_TEAMS_DEPARTMENT" FromRole="DEPARTMENT" ToRole="TEAMS" />
+        </EntityType>
+        <EntityType Name="EMPLOYEES">
+          <Key>
+            <PropertyRef Name="employee_id" />
+          </Key>
+          <Property Name="employee_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="age" Type="Int32" Nullable="false" />
+          <Property Name="first_name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="last_name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="gender" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="team_id" Type="Int32" Nullable="false" />
+          <Property Name="salary" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="TEAMS" Relationship="testdbModel.FK_EMPLOYEES_TEAMS" FromRole="EMPLOYEES" ToRole="TEAMS" />
+        </EntityType>
+        <EntityType Name="MANAGERS">
+          <Key>
+            <PropertyRef Name="mngr_id" />
+          </Key>
+          <Property Name="mngr_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="first_name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="last_name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="gender" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="dept_id" Type="Int32" Nullable="false" />
+          <Property Name="age" Type="Int32" Nullable="false" />
+          <Property Name="salary" Type="Int32" Nullable="false" />
+        </EntityType>
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="principal_id" Type="Int32" Nullable="false" />
+          <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="version" Type="Int32" />
+          <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+        </EntityType>
+        <EntityType Name="TEAMS">
+          <Key>
+            <PropertyRef Name="team_id" />
+          </Key>
+          <Property Name="team_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="team_name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="dept_id" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="DEPARTMENT" Relationship="testdbModel.FK_TEAMS_DEPARTMENT" FromRole="TEAMS" ToRole="DEPARTMENT" />
+          <NavigationProperty Name="EMPLOYEES" Relationship="testdbModel.FK_EMPLOYEES_TEAMS" FromRole="TEAMS" ToRole="EMPLOYEES" />
+        </EntityType>
+        <EntityType Name="viewDepartment">
+          <Key>
+            <PropertyRef Name="dept_id" />
+          </Key>
+          <Property Name="dept_name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="dept_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+        </EntityType>
+        <EntityType Name="ViewEmployees">
+          <Key>
+            <PropertyRef Name="age" />
+            <PropertyRef Name="employee_id" />
+            <PropertyRef Name="team_id" />
+            <PropertyRef Name="salary" />
+            <PropertyRef Name="dept_id" />
+          </Key>
+          <Property Name="age" Type="Int32" Nullable="false" />
+          <Property Name="employee_id" Type="Int32" Nullable="false" />
+          <Property Name="first_name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="last_name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="gender" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="team_id" Type="Int32" Nullable="false" />
+          <Property Name="salary" Type="Int32" Nullable="false" />
+          <Property Name="team_name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="dept_id" Type="Int32" Nullable="false" />
+          <Property Name="dept_name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="ViewManagers">
+          <Key>
+            <PropertyRef Name="age" />
+            <PropertyRef Name="salary" />
+            <PropertyRef Name="mngr_id" />
+          </Key>
+          <Property Name="first_name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="last_name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="gender" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="age" Type="Int32" Nullable="false" />
+          <Property Name="salary" Type="Int32" Nullable="false" />
+          <Property Name="mngr_id" Type="Int32" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ViewTeams">
+          <Key>
+            <PropertyRef Name="team_id" />
+            <PropertyRef Name="dept_id" />
+          </Key>
+          <Property Name="team_id" Type="Int32" Nullable="false" />
+          <Property Name="team_name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="dept_name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="dept_id" Type="Int32" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_TEAMS_DEPARTMENT">
+          <End Type="testdbModel.DEPARTMENT" Role="DEPARTMENT" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="testdbModel.TEAMS" Role="TEAMS" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DEPARTMENT">
+              <PropertyRef Name="dept_id" />
+            </Principal>
+            <Dependent Role="TEAMS">
+              <PropertyRef Name="dept_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_EMPLOYEES_TEAMS">
+          <End Type="testdbModel.TEAMS" Role="TEAMS" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="testdbModel.EMPLOYEES" Role="EMPLOYEES" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TEAMS">
+              <PropertyRef Name="team_id" />
+            </Principal>
+            <Dependent Role="EMPLOYEES">
+              <PropertyRef Name="team_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="testdbModelStoreContainer" CdmEntityContainer="testdbEntities">
+          <EntitySetMapping Name="DEPARTMENT">
+            <EntityTypeMapping TypeName="testdbModel.DEPARTMENT">
+              <MappingFragment StoreEntitySet="DEPARTMENT">
+                <ScalarProperty Name="dept_name" ColumnName="dept_name" />
+                <ScalarProperty Name="dept_id" ColumnName="dept_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="EMPLOYEES">
+            <EntityTypeMapping TypeName="testdbModel.EMPLOYEES">
+              <MappingFragment StoreEntitySet="EMPLOYEES">
+                <ScalarProperty Name="salary" ColumnName="salary" />
+                <ScalarProperty Name="team_id" ColumnName="team_id" />
+                <ScalarProperty Name="gender" ColumnName="gender" />
+                <ScalarProperty Name="last_name" ColumnName="last_name" />
+                <ScalarProperty Name="first_name" ColumnName="first_name" />
+                <ScalarProperty Name="age" ColumnName="age" />
+                <ScalarProperty Name="employee_id" ColumnName="employee_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="MANAGERS">
+            <EntityTypeMapping TypeName="testdbModel.MANAGERS">
+              <MappingFragment StoreEntitySet="MANAGERS">
+                <ScalarProperty Name="salary" ColumnName="salary" />
+                <ScalarProperty Name="age" ColumnName="age" />
+                <ScalarProperty Name="dept_id" ColumnName="dept_id" />
+                <ScalarProperty Name="gender" ColumnName="gender" />
+                <ScalarProperty Name="last_name" ColumnName="last_name" />
+                <ScalarProperty Name="first_name" ColumnName="first_name" />
+                <ScalarProperty Name="mngr_id" ColumnName="mngr_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="sysdiagrams">
+            <EntityTypeMapping TypeName="testdbModel.sysdiagrams">
+              <MappingFragment StoreEntitySet="sysdiagrams">
+                <ScalarProperty Name="definition" ColumnName="definition" />
+                <ScalarProperty Name="version" ColumnName="version" />
+                <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
+                <ScalarProperty Name="principal_id" ColumnName="principal_id" />
+                <ScalarProperty Name="name" ColumnName="name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TEAMS">
+            <EntityTypeMapping TypeName="testdbModel.TEAMS">
+              <MappingFragment StoreEntitySet="TEAMS">
+                <ScalarProperty Name="dept_id" ColumnName="dept_id" />
+                <ScalarProperty Name="team_name" ColumnName="team_name" />
+                <ScalarProperty Name="team_id" ColumnName="team_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="viewDepartment">
+            <EntityTypeMapping TypeName="testdbModel.viewDepartment">
+              <MappingFragment StoreEntitySet="viewDepartment">
+                <ScalarProperty Name="dept_id" ColumnName="dept_id" />
+                <ScalarProperty Name="dept_name" ColumnName="dept_name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ViewEmployees">
+            <EntityTypeMapping TypeName="testdbModel.ViewEmployees">
+              <MappingFragment StoreEntitySet="ViewEmployees">
+                <ScalarProperty Name="dept_name" ColumnName="dept_name" />
+                <ScalarProperty Name="dept_id" ColumnName="dept_id" />
+                <ScalarProperty Name="team_name" ColumnName="team_name" />
+                <ScalarProperty Name="salary" ColumnName="salary" />
+                <ScalarProperty Name="team_id" ColumnName="team_id" />
+                <ScalarProperty Name="gender" ColumnName="gender" />
+                <ScalarProperty Name="last_name" ColumnName="last_name" />
+                <ScalarProperty Name="first_name" ColumnName="first_name" />
+                <ScalarProperty Name="employee_id" ColumnName="employee_id" />
+                <ScalarProperty Name="age" ColumnName="age" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ViewManagers">
+            <EntityTypeMapping TypeName="testdbModel.ViewManagers">
+              <MappingFragment StoreEntitySet="ViewManagers">
+                <ScalarProperty Name="mngr_id" ColumnName="mngr_id" />
+                <ScalarProperty Name="salary" ColumnName="salary" />
+                <ScalarProperty Name="age" ColumnName="age" />
+                <ScalarProperty Name="gender" ColumnName="gender" />
+                <ScalarProperty Name="last_name" ColumnName="last_name" />
+                <ScalarProperty Name="first_name" ColumnName="first_name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ViewTeams">
+            <EntityTypeMapping TypeName="testdbModel.ViewTeams">
+              <MappingFragment StoreEntitySet="ViewTeams">
+                <ScalarProperty Name="dept_id" ColumnName="dept_id" />
+                <ScalarProperty Name="dept_name" ColumnName="dept_name" />
+                <ScalarProperty Name="team_name" ColumnName="team_name" />
+                <ScalarProperty Name="team_id" ColumnName="team_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
